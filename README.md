@@ -69,43 +69,43 @@ kube-system       Active   32h
 
 Kubernetes proxy is responsible for routing network traffic to load-balanced services in the Kubernetes cluster
 
-#####Example:
+##### Example:
 ```
 [root@node4 ~]# kubectl get daemonSets --namespace=kube-system kube-proxy
 NAME         DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                 AGE
 kube-proxy   5         5         5       5            5           beta.kubernetes.io/os=linux   32h
 ```
-#####- kubectl get deployments --namespace=kube-system coredns
+##### - kubectl get deployments --namespace=kube-system coredns
 
 Kubernetes also runs a DNS server, which provides naming and discovery for the services that are defined in the cluster
 
-#####Example:
+##### Example:
 ```
 [root@node4 ~]# kubectl get deployments --namespace=kube-system coredns
 NAME      READY   UP-TO-DATE   AVAILABLE   AGE
 coredns   2/2     2            2           32h
 ```
-#####- kubectl get services --namespace=kube-system coredns
+##### - kubectl get services --namespace=kube-system coredns
 
 Kubernetes service that performs load-balancing for the DNS server. This information will be populated in /etc/resolv.conf file in each container
 
-#####Example:
+##### Example:
 ```
 [root@node4 ~]# kubectl get services --namespace=kube-system coredns
 NAME      TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                  AGE
 coredns   ClusterIP   10.233.0.3   <none>        53/UDP,53/TCP,9153/TCP   32h
 ```
-#####- kubectl get deployments --namespace=kube-system kubernetes-dashboard
+##### - kubectl get deployments --namespace=kube-system kubernetes-dashboard
 
 Kubernetes UI service
 
-#####Example:
+##### Example:
 ```
 [root@node4 ~]# kubectl get deployments --namespace=kube-system kubernetes-dashboard
 NAME                   READY   UP-TO-DATE   AVAILABLE   AGE
 kubernetes-dashboard   1/1     1            1           32h
 ```
-#####- kubectl get services --namespace=kube-system kubernetes-dashboard
+##### - kubectl get services --namespace=kube-system kubernetes-dashboard
 
 Kubernetes UI internal IP address and ports
 ```
@@ -113,21 +113,21 @@ Kubernetes UI internal IP address and ports
 NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
 kubernetes-dashboard   ClusterIP   10.233.40.188   <none>        443/TCP   32h
 ```
-#####- kubectl cluster-info [dump]
+##### - kubectl cluster-info [dump]
 
 Display cluster information
 Dump - collections of debugs
 
-#####Example:
+##### Example:
 ```
 [root@node4 ~]# kubectl cluster-info
 Kubernetes master is running at https://192.168.166.84:6443
 coredns is running at https://192.168.166.84:6443/api/v1/namespaces/kube-system/services/coredns:dns/proxy
 kubernetes-dashboard is running at https://192.168.166.84:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
 ```
-####Advanced command example:
+#### Advanced command example:
 
-#####- kubectl get ``<resource name>`` ``<object>``
+##### - kubectl get ``<resource name>`` ``<object>``
 
 By default this command will provide human readable limited output.
 To get detailed output -o json option can be used
@@ -138,26 +138,26 @@ For precise output for particular object from json output --template option can 
 [root@node4 ~]# kubectl get pods --namespace=kube-system kubernetes-dashboard-7c547b4c64-cw2fn -o jsonpath --template={.status.hostIP} | xargs
 192.168.166.83
 ```
-####Debugging commands:
+#### Debugging commands:
 
-#####- kubectl logs <pod-name> [ -c <container-name> ] [ -f to strem the logs ]
+##### - kubectl logs <pod-name> [ -c <container-name> ] [ -f to strem the logs ]
 
 Output logs from pod or container
 
-#####Example:
+##### Example:
 ```
 [root@node4 ~]# kubectl logs --namespace=kube-system kubernetes-dashboard-7c547b4c64-cw2fn
 ```
-#####- kubectl exec ``--namespace=<namespace name>`` `` -it <pod-name> -- <command to execute in pod or container>``
+##### - kubectl exec ``--namespace=<namespace name>`` `` -it <pod-name> -- <command to execute in pod or container>``
 
 Execute some command in pod or container, or bash to interact with container.
 In order to exit correctly from container: Ctrl + p -> Ctrl + q
 
-#####Example:
+##### Example:
 ```
 [root@node4 ~]# kubectl exec --namespace=kube-system  -it nginx-proxy-node1 -- /bin/bash --version | grep bash.*version
 GNU bash, version 4.4.12(1)-release (x86_64-pc-linux-gnu)
 ```
-#####- kubectl cp ``<pod-name>:/path/to/remote/file`` ``/path/to/local/file``
+##### - kubectl cp ``<pod-name>:/path/to/remote/file`` ``/path/to/local/file``
 
 Copy from container to local machine or opposite
