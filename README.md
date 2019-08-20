@@ -140,9 +140,10 @@ For precise output for particular object from json output --template option can 
 ```
 #### Debugging commands:
 
-##### - kubectl logs <pod-name> [ -c <container-name> ] [ -f to strem the logs ]
+##### - kubectl logs <pod-name> [ -c <container-name> ] [ -f to stream the logs ]
 
-Output logs from pod or container
+Output logs from pod or container. Adding ``--previous`` flag will capture logs from previous instance of the particular container.
+This is useful if particular container continuously restarting
 
 ##### Example:
 ```
@@ -162,7 +163,7 @@ GNU bash, version 4.4.12(1)-release (x86_64-pc-linux-gnu)
 
 Copy from container to local machine or opposite
 
-##### - kubectl run testapp --image=gcr.io/kuar-demo/kuard-amd64:1
+##### - kubectl run testapp ``--image=gcr.io/kuar-demo/kuard-amd64:1``
 
 Will be obsolete later with kubectl create command
 
@@ -170,8 +171,8 @@ Command above will create deployment and will start pod named testapp.
 
 To delete deployment as well as all related pods use:
 
-```[root@node4 ~]# kubectl delete deployments/testapp
-deployment.extensions "testapp" deleted```
+``[root@node4 ~]# kubectl delete deployments/testapp
+deployment.extensions "testapp" deleted``
 
 ##### - kubectl apply -f testapp.yaml
 
