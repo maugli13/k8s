@@ -181,7 +181,6 @@ deployment.extensions "testapp" deleted``
 [root@node4 ~]# kubectl delete deployments/testapp
 deployment.extensions "testapp" deleted
 ```
->>>>>>> 011f17bf7bfb5520d3ad16f036a5342be1d654c8
 ##### - kubectl apply -f testapp.yaml
 
 Yaml file example:
