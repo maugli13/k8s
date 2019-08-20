@@ -171,9 +171,17 @@ Command above will create deployment and will start pod named testapp.
 
 To delete deployment as well as all related pods use:
 
+<<<<<<< HEAD
 ``[root@node4 ~]# kubectl delete deployments/testapp
 deployment.extensions "testapp" deleted``
 
+=======
+##### Example:
+```
+[root@node4 ~]# kubectl delete deployments/testapp
+deployment.extensions "testapp" deleted
+```
+>>>>>>> 011f17bf7bfb5520d3ad16f036a5342be1d654c8
 ##### - kubectl apply -f testapp.yaml
 
 Yaml file example:
@@ -196,5 +204,6 @@ spec:
 Delete pod by name or using created yaml file:
 ```
 [root@node4 ~]# kubectl delete pods/testapp
-pod "testapp" deleted```
+pod "testapp" deleted
+```
 
