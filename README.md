@@ -171,7 +171,6 @@ Command above will create deployment and will start pod named testapp.
 
 To delete deployment as well as all related pods use:
 
-<<<<<<< HEAD
 ``[root@node4 ~]# kubectl delete deployments/testapp
 deployment.extensions "testapp" deleted``
 
@@ -206,3 +205,35 @@ Delete pod by name or using created yaml file:
 pod "testapp" deleted
 ```
 
+##### More kubectl run examples
+
+Nginx service was choosen as example:
+
+1. Create NGINX pod
+
+```
+kubectl run --generator=run-pod/v1 nginx --image nginx 
+```
+
+2. Generate POD manifest YAML file, without creating
+
+```
+kubectl run --generator=run-pod/v1 nginx --image=nginx --dry-run -o yaml
+```
+
+3. Create a deployment
+
+```
+kubectl run --generator=deployment/v1beta1 nginx --image=nginx
+```
+4. Generate deployment YAML file, without creating
+
+```
+kubectl run --generator=deployment/v1beta1 nginx --image=nginx --dry-run -o yaml
+```
+
+5. Generate deployment YAML file, without creating with 4 replicas
+
+```
+kubectl run --generator=deployment/v1beta1 nginx --image=nginx --dry-run --replicas=4 -o yaml > nginx-deployment.yaml
+```
