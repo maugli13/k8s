@@ -204,7 +204,6 @@ Delete pod by name or using created yaml file:
 [root@node4 ~]# kubectl delete pods/testapp
 pod "testapp" deleted
 ```
-
 ##### More kubectl run examples
 
 Nginx service was choosen as example:
@@ -237,3 +236,100 @@ kubectl run --generator=deployment/v1beta1 nginx --image=nginx --dry-run -o yaml
 ```
 kubectl run --generator=deployment/v1beta1 nginx --image=nginx --dry-run --replicas=4 -o yaml > nginx-deployment.yaml
 ```
+
+##### Kubectl services and external access
+
+Nodeport - port accesible on the node for given pod
+ClusterIP - virtual ip inside a cluster for communication between different services
+LoadBalancer - distribution load across different web servers
+
+Service definition file example for Nodeport:
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+        name: myapp-service
+
+spec:
+        type: NodePort
+        ports:
+                - targetPort: 80
+                  port: 80
+                  nodePort: 30008
+        selector:
+                app: myapp
+                type: front-end
+```
+
+Service definition file example for ClusterIP:
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+        name: back-end
+
+spec:
+        type: ClusterIP
+        ports:
+                - targetPort: 80
+                  port: 80
+        selector:
+                app: myapp
+                type: back-end
+```
+##### Kubectl service related commands
+
+1. Create a Service named redis-service of ClusterIP to expose pod redis on port 6379
+
+```
+kubectl expose pod redis --port=6379 --name redis-service --dry-run -o yaml
+```
+
+```
+kubectl create service clusterip redis --tcp=6379:6379 --dry-run -o yaml
+```
+
+2. Create a service named nginx or type NodePort to expose pod nginx's port 80 on port 30080
+
+```
+kubectl expose pod nginx --port=80 --name nginx-service --dry-run -o yaml
+```
+
+```
+kubectl create service nodeport nginx --tcp=80:80 --node-port=30080 --dry-run -o yaml
+```
+
+##### Kubectl check rollouts
+
+Check deployments
+
+```
+$ kubectl get deployment
+NAME                READY   UP-TO-DATE   AVAILABLE   AGE
+myapp-deployment    3/3     3            3           4d11h
+netchecker-server   1/1     1            1           38d
+```
+
+Check status of deployment
+
+```
+$ kubectl rollout status deployments/myapp-deployment
+deployment "myapp-deployment" successfully rolled out
+```
+
+Check versions of applications
+
+```
+$ kubectl rollout history deployments/myapp-deployment
+deployment.extensions/myapp-deployment
+REVISION  CHANGE-CAUSE
+1         <none>
+```
+##### Detect privileges
+
+```
+$ sudo kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{range .spec.initContainers[*]}{.image}{"\t"}{.securityContext}{.end}{"\n"}{end}' | sort | uniq
+```
+
