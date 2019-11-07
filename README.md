@@ -334,6 +334,8 @@ $ sudo kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{range .s
 ```
 ##### Detect all images used by pods
 
+```
 $ kubectl get pods -n kube-system -l k8s-app=kube-dns -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.containers[*].image}{"\n"}{end}'
 coredns-78fcdf6894-fh9vj	k8s.gcr.io/coredns:1.1.3
-coredns-78fcdf6894-skdg6	k8s.gcr.io/coredns:1.1.3
+coredns-76fcdf6894-skdg6	k8s.gcr.io/coredns:1.1.3
+```
